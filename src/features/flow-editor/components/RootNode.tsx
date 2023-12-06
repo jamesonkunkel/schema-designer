@@ -3,7 +3,7 @@ import { Handle, Position } from "reactflow";
 import type { NodeProps } from "reactflow";
 
 export type RootNodeData = {
-  label: string;
+  name: string;
 };
 
 function RootNode(props: NodeProps<RootNodeData>) {
@@ -12,7 +12,7 @@ function RootNode(props: NodeProps<RootNodeData>) {
       <div className="card card-compact bg-primary text-primary-content w-32">
         <div className="card-body">
           <div className="card-title">
-            <h3>{props.data.label}</h3>
+            <h3>{props.data.name}</h3>
           </div>
         </div>
       </div>

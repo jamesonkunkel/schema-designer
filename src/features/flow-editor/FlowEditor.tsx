@@ -102,11 +102,12 @@ function FlowEditor() {
 
   const handleSelectNodeType = (nodeId: string, isObject: boolean) => {
     const newObjNodeData: ObjectNodeData = {
-      label: "Object",
+      name: "",
+      description: "",
     };
 
     const newNonObjNodeData: NonObjectNodeData = {
-      label: "Non-Object",
+      label: "nonObject",
     };
 
     updateNode(nodeId, (prev) => ({

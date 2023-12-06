@@ -42,7 +42,7 @@ const useFlowEditorStore = createWithEqualityFn<FlowEditorStore>(
         {
           id: "root",
           type: "root",
-          data: { label: "Root" },
+          data: { name: "Root" },
           position: { x: 250, y: 5 },
         },
       ],

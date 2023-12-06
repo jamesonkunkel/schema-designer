@@ -3,10 +3,14 @@ import type {
   ReactFlowJsonObject,
   NodeChange,
   EdgeChange,
-  Connection,
   Node,
-  Edge,
 } from "reactflow";
+
+//import node data types
+import type { RootNodeData } from "../features/flow-editor/components/RootNode";
+import type { SelectorNodeData } from "../features/flow-editor/components/SelectorNode";
+import type { ObjectNodeData } from "../features/flow-editor/components/ObjectNode";
+import type { NonObjectNodeData } from "../features/flow-editor/components/NonObjectNode";
 
 //import libraries
 import { createWithEqualityFn } from "zustand/traditional";
@@ -42,7 +46,10 @@ const useFlowEditorStore = createWithEqualityFn<FlowEditorStore>(
         {
           id: "root",
           type: "root",
-          data: { name: "Root" },
+          data: {
+            name: "Root",
+            description: "This is the root object of the schema.",
+          },
           position: { x: 250, y: 5 },
         },
       ],

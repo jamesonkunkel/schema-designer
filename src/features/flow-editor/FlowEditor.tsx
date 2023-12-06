@@ -103,7 +103,8 @@ function FlowEditor() {
   const handleSelectNodeType = (nodeId: string, isObject: boolean) => {
     const newObjNodeData: ObjectNodeData = {
       name: "",
-      description: "",
+      description:
+        "This is a description of an object. This is a much longer description. It is so long and has nothing else to say. I am just writing random stuff now to add more description!",
     };
 
     const newNonObjNodeData: NonObjectNodeData = {

@@ -16,6 +16,7 @@ import ErrorIcon from "../../../assets/ErrorIcon";
 export type ObjectNodeData = {
   name: string;
   description: string;
+  required: boolean;
 };
 
 function ObjectNode(props: NodeProps<ObjectNodeData>) {
@@ -27,6 +28,7 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [name, setName] = useState(props.data.name);
   const [description, setDescription] = useState(props.data.description);
+  const [required, setRequired] = useState(props.data.required);
 
   const handleSaveName = () => {
     setIsEditingName(false);
@@ -38,6 +40,15 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
     updateNode(props.id, (prev) => ({
       ...prev,
       data: { ...prev.data, description },
+    }));
+  };
+
+  const handleSaveRequired = () => {
+    setRequired(!required);
+
+    updateNode(props.id, (prev) => ({
+      ...prev,
+      data: { ...prev.data, required: !required },
     }));
   };
 
@@ -114,6 +125,18 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
               </div>
             </div>
           )}
+
+          <div className="card bg-base-100 px-4 py-1">
+            <label className="label cursor-pointer ">
+              <span className="label-text">Required?</span>
+              <input
+                checked={required}
+                type="checkbox"
+                className="checkbox"
+                onChange={handleSaveRequired}
+              />
+            </label>
+          </div>
         </div>
       </div>
 

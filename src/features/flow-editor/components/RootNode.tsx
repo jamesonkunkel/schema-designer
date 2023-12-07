@@ -22,15 +22,8 @@ function RootNode(props: NodeProps<RootNodeData>) {
   const [updateNode] = useFlowEditorStore((state) => [state.updateNode]);
 
   //component state
-  const [isEditingName, setIsEditingName] = useState(false);
   const [isEditingDescription, setIsEditingDescription] = useState(false);
-  const [name, setName] = useState(props.data.name);
   const [description, setDescription] = useState(props.data.description);
-
-  const handleSaveName = () => {
-    setIsEditingName(false);
-    updateNode(props.id, (prev) => ({ ...prev, data: { ...prev.data, name } }));
-  };
 
   const handleSaveDescription = () => {
     setIsEditingDescription(false);
@@ -44,34 +37,11 @@ function RootNode(props: NodeProps<RootNodeData>) {
     <>
       <div className="card card-compact bg-primary text-primary-content max-w-sm">
         <div className="card-body">
-          {!isEditingName && (
-            <div className="card-title text-2xl">
-              <h3>
-                {props.data.name === "" ? "Unnamed Object" : props.data.name}
-              </h3>
-              <button
-                onClick={() => setIsEditingName(true)}
-                className="btn btn-xs"
-              >
-                <EditIcon />
-              </button>
-            </div>
-          )}
-
-          {isEditingName && (
-            <div className="card-title text-base-content">
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Name of object"
-                className="input input-bordered w-full max-w-xs"
-              />
-              <button onClick={handleSaveName} className="btn btn-xs">
-                <SaveIcon />
-              </button>
-            </div>
-          )}
+          <div className="card-title text-2xl">
+            <h3>
+              {props.data.name === "" ? "Unnamed Object" : props.data.name}
+            </h3>
+          </div>
 
           {!isEditingDescription && (
             <div className="flex flex-col space-y-2">

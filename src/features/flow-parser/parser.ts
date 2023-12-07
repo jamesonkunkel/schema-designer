@@ -7,6 +7,7 @@ interface JsonSchema {
   properties: {
     [key: string]: any;
   };
+  required: string[];
 }
 
 export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
@@ -22,6 +23,7 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
     type: "object",
     description: rootNode.data.description,
     properties: {},
+    required: [],
   };
 
   //determine the children of rootNode using the edges array
@@ -48,6 +50,10 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
         type: childNode.data.type,
         description: childNode.data.description,
       };
+    }
+
+    if (childNode.data.required && childNode.data.name !== "") {
+      schema.required.push(childNode.data.name);
     }
   });
 

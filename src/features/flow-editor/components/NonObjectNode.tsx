@@ -17,6 +17,7 @@ export type NonObjectNodeData = {
   name: string;
   description: string;
   type: "" | "string" | "number" | "boolean";
+  required: boolean;
 };
 
 function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
@@ -29,6 +30,7 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
   const [name, setName] = useState(props.data.name);
   const [description, setDescription] = useState(props.data.description);
   const [type, setType] = useState(props.data.type as string);
+  const [required, setRequired] = useState(props.data.required);
 
   const handleSaveName = () => {
     setIsEditingName(false);
@@ -52,6 +54,15 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
     }));
   };
 
+  const handleSaveRequired = () => {
+    setRequired(!required);
+
+    updateNode(props.id, (prev) => ({
+      ...prev,
+      data: { ...prev.data, required: !required },
+    }));
+  };
+
   return (
     <>
       <Handle
@@ -67,7 +78,7 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
             <div className="card-title text-2xl">
               {props.data.name === "" && <ErrorIcon />}
               <h3>
-                {props.data.name === "" ? "Unnamed Object" : props.data.name}
+                {props.data.name === "" ? "Unnamed Property" : props.data.name}
               </h3>
               <button
                 onClick={() => setIsEditingName(true)}
@@ -133,11 +144,23 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
                 handleSaveType(e.target.value);
               }}
             >
-              <option value="">Select an option</option>
+              <option value="">Property type</option>
               <option value="string">string</option>
               <option value="number">number</option>
               <option value="boolean">boolean</option>
             </select>
+          </div>
+
+          <div className="card bg-base-100 px-4 py-1">
+            <label className="label cursor-pointer ">
+              <span className="label-text">Required?</span>
+              <input
+                checked={required}
+                type="checkbox"
+                className="checkbox"
+                onChange={handleSaveRequired}
+              />
+            </label>
           </div>
         </div>
       </div>

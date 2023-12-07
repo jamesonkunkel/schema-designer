@@ -108,6 +108,7 @@ function FlowEditor() {
       name: "",
       description:
         "This is a description of an object. This is a much longer description. It is so long and has nothing else to say. I am just writing random stuff now to add more description!",
+      required: true,
     };
 
     const newNonObjNodeData: NonObjectNodeData = {
@@ -115,6 +116,7 @@ function FlowEditor() {
       description:
         "This is a non-object node. It could represent the property of an object like a string.",
       type: "",
+      required: true,
     };
 
     updateNode(nodeId, (prev) => ({

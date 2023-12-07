@@ -11,6 +11,7 @@ import SaveIcon from "../../../assets/SaveIcon";
 
 //import stores
 import useFlowEditorStore from "../../../stores/flowEditorStore";
+import ErrorIcon from "../../../assets/ErrorIcon";
 
 export type ObjectNodeData = {
   name: string;
@@ -53,6 +54,8 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
         <div className="card-body">
           {!isEditingName && (
             <div className="card-title text-2xl">
+              {props.data.name === "" && <ErrorIcon />}
+
               <h3>
                 {props.data.name === "" ? "Unnamed Object" : props.data.name}
               </h3>

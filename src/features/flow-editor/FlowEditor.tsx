@@ -111,7 +111,10 @@ function FlowEditor() {
     };
 
     const newNonObjNodeData: NonObjectNodeData = {
-      label: "nonObject",
+      name: "",
+      description:
+        "This is a non-object node. It could represent the property of an object like a string.",
+      type: "",
     };
 
     updateNode(nodeId, (prev) => ({

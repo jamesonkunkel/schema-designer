@@ -43,7 +43,9 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
     }));
   };
 
-  const handleSaveType = () => {
+  const handleSaveType = (type: string) => {
+    setType(type);
+
     updateNode(props.id, (prev) => ({
       ...prev,
       data: { ...prev.data, type },
@@ -128,8 +130,7 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
               value={type}
               className="select select-bordered w-full max-w-xs text-base-content"
               onChange={(e) => {
-                setType(e.target.value);
-                handleSaveType();
+                handleSaveType(e.target.value);
               }}
             >
               <option value="">Select an option</option>

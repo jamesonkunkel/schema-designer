@@ -125,7 +125,13 @@ function FlowEditor() {
   };
 
   const logFlowToSchema = () => {
-    console.log(flowToSchema("root", editingFlow.nodes, editingFlow.edges));
+    console.log(
+      JSON.stringify(
+        flowToSchema("root", editingFlow.nodes, editingFlow.edges),
+        null,
+        2
+      )
+    );
   };
 
   return (

@@ -2,10 +2,10 @@
 import type { ReactFlowJsonObject, Node, Edge } from "reactflow";
 
 interface JsonSchema {
-  type: "object";
+  type: string;
   description?: string;
   properties: {
-    [key: string]: JsonSchema;
+    [key: string]: any;
   };
 }
 
@@ -33,10 +33,22 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
     return schema;
   }
 
+  //get the nodes that match each child
+  const rootNodeChildrenNodes = rootNodeChildren.map((childId) => {
+    return nodes.find((node) => node.id === childId);
+  }) as Node[];
+
   //for each child, recursively call flowToSchema to get its schema
-  rootNodeChildren.forEach((childId) => {
-    const childSchema = flowToSchema(childId, nodes, edges);
-    schema.properties[childId] = childSchema;
+  rootNodeChildrenNodes.forEach((childNode) => {
+    if (childNode.type === "object") {
+      const childSchema = flowToSchema(childNode.id, nodes, edges);
+      schema.properties[childNode.data.name] = childSchema;
+    } else {
+      schema.properties[childNode.data.name] = {
+        type: childNode.data.type,
+        description: childNode.data.description,
+      };
+    }
   });
 
   return schema;

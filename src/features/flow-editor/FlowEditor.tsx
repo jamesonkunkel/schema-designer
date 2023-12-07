@@ -21,6 +21,9 @@ import type { SelectorNodeData } from "./components/SelectorNode";
 import type { ObjectNodeData } from "./components/ObjectNode";
 import type { NonObjectNodeData } from "./components/NonObjectNode";
 
+//import utils
+import { flowToSchema } from "../flow-parser/parser";
+
 const nodeTypes = {
   root: RootNode,
   selector: SelectorNode,
@@ -118,20 +121,8 @@ function FlowEditor() {
     }));
   };
 
-  const test = () => {
-    const newFlow = {
-      ...editingFlow,
-      nodes: editingFlow.nodes.map((node) => {
-        if (node.id === "root") {
-          return {
-            ...node,
-            type: "default",
-          };
-        }
-        return node;
-      }),
-    };
-    updateEditingFlow(newFlow);
+  const logFlowToSchema = () => {
+    console.log(flowToSchema("root", editingFlow.nodes, editingFlow.edges));
   };
 
   return (
@@ -154,7 +145,9 @@ function FlowEditor() {
           }}
         />
         <Panel position="top-left">
-          <button onClick={test}>Click Me</button>
+          <button onClick={logFlowToSchema} className="btn btn-success">
+            To Schema
+          </button>
         </Panel>
       </ReactFlow>
     </div>

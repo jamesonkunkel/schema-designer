@@ -1,12 +1,15 @@
-//import components
+//import reactflow provider
 import { ReactFlowProvider } from "reactflow";
+
+//import components
+import Sidebar from "./components/Sidebar";
 import FlowEditor from "../flow-editor/FlowEditor";
 
 function Home() {
   return (
     <div className="flex flex-col space-y-4 px-4 py-4 h-3/4">
       <div className="flex h-full">
-        <div className="w-1/4 h-full space-x-4">Sidebar</div>
+        <Sidebar />
         <ReactFlowProvider>
           <FlowEditor />
         </ReactFlowProvider>

@@ -6,12 +6,6 @@ import type {
   Node,
 } from "reactflow";
 
-//import node data types
-import type { RootNodeData } from "../features/flow-editor/components/RootNode";
-import type { SelectorNodeData } from "../features/flow-editor/components/SelectorNode";
-import type { ObjectNodeData } from "../features/flow-editor/components/ObjectNode";
-import type { NonObjectNodeData } from "../features/flow-editor/components/NonObjectNode";
-
 //import libraries
 import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
@@ -20,7 +14,10 @@ import { shallow } from "zustand/shallow";
 type GenericUpdateFn<T> = (prev: T) => T;
 
 interface FlowEditorStore {
-  editingFlow: ReactFlowJsonObject;
+  editingFlow: ReactFlowJsonObject | null;
+
+  //set the editingFlow
+  setEditingFlow: (flow: ReactFlowJsonObject) => void;
 
   updateEditingFlow: (
     flow: ReactFlowJsonObject | GenericUpdateFn<ReactFlowJsonObject>
@@ -59,6 +56,13 @@ const useFlowEditorStore = createWithEqualityFn<FlowEditorStore>(
         x: 0,
         y: 0,
       },
+    },
+
+    //set the editingFlow
+    setEditingFlow: (flow: ReactFlowJsonObject) => {
+      set(() => ({
+        editingFlow: flow,
+      }));
     },
 
     //update the editingFlow

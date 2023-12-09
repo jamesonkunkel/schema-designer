@@ -1,9 +1,23 @@
 //import stores
 import { useProjectsStore } from "../../../stores/projectsStore";
+import useFlowEditorStore from "../../../stores/flowEditorStore";
 
 function ProjectTable() {
-  //store selector
-  const projects = useProjectsStore((state) => state.projects);
+  //store selectors
+  const [projects, deleteProject] = useProjectsStore((state) => [
+    state.projects,
+    state.deleteProject,
+  ]);
+
+  const setEditingFlow = useFlowEditorStore((state) => state.setEditingFlow);
+
+  const handleStartEditing = (id: string) => {
+    const project = projects.find((project) => project.id === id);
+
+    if (project) {
+      setEditingFlow(project.flow);
+    }
+  };
 
   return (
     <div className="overflow-x-auto">
@@ -21,8 +35,18 @@ function ProjectTable() {
             <tr key={project.id}>
               <td>{project.name}</td>
               <td className="flex space-x-2">
-                <button className="btn btn-xs btn-secondary">Edit</button>
-                <button className="btn btn-xs btn-error">Delete</button>
+                <button
+                  onClick={() => handleStartEditing(project.id)}
+                  className="btn btn-xs btn-secondary"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => deleteProject(project.id)}
+                  className="btn btn-xs btn-error"
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}

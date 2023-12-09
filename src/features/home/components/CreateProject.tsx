@@ -4,6 +4,9 @@ import { useState } from "react";
 //import stores
 import { useProjectsStore } from "../../../stores/projectsStore";
 
+//import types
+import type { ReactFlowJsonObject } from "reactflow";
+
 //import utils
 import { nanoid } from "nanoid";
 
@@ -20,9 +23,30 @@ function CreateProject() {
 
     const id = nanoid();
 
+    const flow: ReactFlowJsonObject = {
+      nodes: [
+        {
+          id: "root",
+          type: "root",
+          data: {
+            name: "Root",
+            description: "This is the root object of the schema.",
+          },
+          position: { x: 250, y: 5 },
+        },
+      ],
+      edges: [],
+      viewport: {
+        zoom: 1,
+        x: 0,
+        y: 0,
+      },
+    };
+
     addProject({
       id,
       name,
+      flow,
     });
 
     setName("");

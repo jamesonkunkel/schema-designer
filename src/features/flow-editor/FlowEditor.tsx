@@ -127,6 +127,8 @@ function FlowEditor() {
   };
 
   const logFlowToSchema = () => {
+    if (!editingFlow) return;
+
     console.log(
       JSON.stringify(
         flowToSchema("root", editingFlow.nodes, editingFlow.edges),
@@ -135,6 +137,8 @@ function FlowEditor() {
       )
     );
   };
+
+  if (!editingFlow) return null;
 
   return (
     <div className="w-3/4 h-full" ref={reactFlowWrapper}>

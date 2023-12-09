@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 //import stores
-import { useProjectsStore } from "../../../stores/projectsStore";
+import useProjectsStore from "../../../stores/projectsStore";
 
 //import types
 import type { ReactFlowJsonObject } from "reactflow";

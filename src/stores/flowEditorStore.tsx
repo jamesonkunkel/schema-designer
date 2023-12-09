@@ -6,6 +6,8 @@ import type {
   Node,
 } from "reactflow";
 
+import type { Project } from "./projectsStore";
+
 //import libraries
 import { createWithEqualityFn } from "zustand/traditional";
 import { shallow } from "zustand/shallow";
@@ -14,7 +16,11 @@ import { shallow } from "zustand/shallow";
 type GenericUpdateFn<T> = (prev: T) => T;
 
 interface FlowEditorStore {
+  editingProject: Project | null;
   editingFlow: ReactFlowJsonObject | null;
+
+  //set the editingProject
+  setEditingProject: (project: Project) => void;
 
   //set the editingFlow
   setEditingFlow: (flow: ReactFlowJsonObject) => void;
@@ -38,24 +44,16 @@ interface FlowEditorStore {
 
 const useFlowEditorStore = createWithEqualityFn<FlowEditorStore>(
   (set, get) => ({
-    editingFlow: {
-      nodes: [
-        {
-          id: "root",
-          type: "root",
-          data: {
-            name: "Root",
-            description: "This is the root object of the schema.",
-          },
-          position: { x: 250, y: 5 },
-        },
-      ],
-      edges: [],
-      viewport: {
-        zoom: 1,
-        x: 0,
-        y: 0,
-      },
+    editingProject: null,
+
+    editingFlow: null,
+
+    //set the editingProject
+    setEditingProject: (project: Project) => {
+      set(() => ({
+        editingProject: project,
+        editingFlow: project.flow,
+      }));
     },
 
     //set the editingFlow

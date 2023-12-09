@@ -3,7 +3,7 @@ import ProjectTable from "./ProjectTable";
 
 import { useEffect } from "react";
 
-import { useProjectsStore } from "../../../stores/projectsStore";
+import useProjectsStore from "../../../stores/projectsStore";
 
 function Sidebar() {
   const fetchProjects = useProjectsStore((state) => state.fetchProjects);

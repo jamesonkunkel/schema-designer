@@ -4,6 +4,7 @@ import { useCallback, useRef } from "react";
 
 //import stores
 import useFlowEditorStore from "../../stores/flowEditorStore";
+import useProjectsStore from "../../stores/projectsStore";
 
 //import reactflow
 import ReactFlow, { Background, Panel, addEdge, useReactFlow } from "reactflow";
@@ -18,8 +19,6 @@ import NonObjectNode from "./components/NonObjectNode";
 
 //import node data types
 import type { SelectorNodeData } from "./components/SelectorNode";
-import type { ObjectNodeData } from "./components/ObjectNode";
-import type { NonObjectNodeData } from "./components/NonObjectNode";
 
 //import utils
 import { flowToSchema } from "../flow-parser/parser";
@@ -36,20 +35,24 @@ function FlowEditor() {
   const reactFlowWrapper = useRef(null);
   const connectingNodeId = useRef<string | null>(null);
 
-  //store selector
+  //store selectors
   const [
+    editingProject,
     editingFlow,
     updateEditingFlow,
     onNodesChange,
     onEdgesChange,
     updateNode,
   ] = useFlowEditorStore((state) => [
+    state.editingProject,
     state.editingFlow,
     state.updateEditingFlow,
     state.onNodesChange,
     state.onEdgesChange,
     state.updateNode,
   ]);
+
+  const updateProject = useProjectsStore((state) => state.updateProject);
 
   const { screenToFlowPosition } = useReactFlow();
 
@@ -74,7 +77,7 @@ function FlowEditor() {
             x: event.clientX,
             y: event.clientY,
           }),
-          data: { setIsObject: handleSelectNodeType },
+          data: {},
         };
 
         const newEdge: Edge = {
@@ -103,29 +106,6 @@ function FlowEditor() {
     }));
   };
 
-  const handleSelectNodeType = (nodeId: string, isObject: boolean) => {
-    const newObjNodeData: ObjectNodeData = {
-      name: "",
-      description:
-        "This is a description of an object. This is a much longer description. It is so long and has nothing else to say. I am just writing random stuff now to add more description!",
-      required: true,
-    };
-
-    const newNonObjNodeData: NonObjectNodeData = {
-      name: "",
-      description:
-        "This is a non-object node. It could represent the property of an object like a string.",
-      type: "",
-      required: true,
-    };
-
-    updateNode(nodeId, (prev) => ({
-      ...prev,
-      type: isObject ? "object" : "nonObject",
-      data: isObject ? newObjNodeData : newNonObjNodeData,
-    }));
-  };
-
   const logFlowToSchema = () => {
     if (!editingFlow) return;
 
@@ -138,7 +118,16 @@ function FlowEditor() {
     );
   };
 
-  if (!editingFlow) return null;
+  const handleSave = () => {
+    if (!editingFlow || !editingProject) return;
+
+    updateProject(editingProject.id, (prev) => ({
+      ...prev,
+      flow: editingFlow,
+    }));
+  };
+
+  if (!editingFlow) return <div>Select a schema project.</div>;
 
   return (
     <div className="w-3/4 h-full" ref={reactFlowWrapper}>
@@ -162,6 +151,9 @@ function FlowEditor() {
         <Panel position="top-left">
           <button onClick={logFlowToSchema} className="btn btn-success">
             To Schema
+          </button>
+          <button onClick={handleSave} className="btn btn-success">
+            Save
           </button>
         </Panel>
       </ReactFlow>

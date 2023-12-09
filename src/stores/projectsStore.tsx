@@ -7,7 +7,7 @@ import { create } from "zustand";
 //generic node and edge updater functions
 type GenericUpdateFn<T> = (prev: T) => T;
 
-type Project = {
+export type Project = {
   id: string;
   name: string;
   flow: ReactFlowJsonObject;
@@ -18,10 +18,14 @@ type StoreState = {
   fetchProjects: () => void;
   addProject: (project: Project) => void;
   deleteProject: (id: string) => void;
+  updateProject: (
+    id: string,
+    updatedProject: Project | GenericUpdateFn<Project>
+  ) => void;
   saveProjects: () => void;
 };
 
-export const useProjectsStore = create<StoreState>((set, get) => ({
+const useProjectsStore = create<StoreState>((set, get) => ({
   projects: [],
 
   fetchProjects: () => {
@@ -44,7 +48,22 @@ export const useProjectsStore = create<StoreState>((set, get) => ({
     get().saveProjects();
   },
 
+  updateProject: (id, updatedProject) => {
+    set((state) => ({
+      projects: state.projects.map((project) =>
+        project.id === id
+          ? typeof updatedProject === "function"
+            ? updatedProject(project)
+            : updatedProject
+          : project
+      ),
+    }));
+    get().saveProjects();
+  },
+
   saveProjects: () => {
     localStorage.setItem("projects", JSON.stringify(get().projects));
   },
 }));
+
+export default useProjectsStore;

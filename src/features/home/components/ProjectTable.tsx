@@ -1,5 +1,5 @@
 //import stores
-import { useProjectsStore } from "../../../stores/projectsStore";
+import useProjectsStore from "../../../stores/projectsStore";
 import useFlowEditorStore from "../../../stores/flowEditorStore";
 
 function ProjectTable() {
@@ -9,13 +9,15 @@ function ProjectTable() {
     state.deleteProject,
   ]);
 
-  const setEditingFlow = useFlowEditorStore((state) => state.setEditingFlow);
+  const setEditingProject = useFlowEditorStore(
+    (state) => state.setEditingProject
+  );
 
   const handleStartEditing = (id: string) => {
     const project = projects.find((project) => project.id === id);
 
     if (project) {
-      setEditingFlow(project.flow);
+      setEditingProject(project);
     }
   };
 

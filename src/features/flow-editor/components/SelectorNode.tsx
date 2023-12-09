@@ -2,11 +2,40 @@
 import { Handle, Position } from "reactflow";
 import type { NodeProps } from "reactflow";
 
-export type SelectorNodeData = {
-  setIsObject: (id: string, isObject: boolean) => void;
-};
+import type { ObjectNodeData } from "./ObjectNode";
+import type { NonObjectNodeData } from "./NonObjectNode";
+
+//import stores
+import useFlowEditorStore from "../../../stores/flowEditorStore";
+
+export type SelectorNodeData = {};
 
 function SelectorNode(props: NodeProps<SelectorNodeData>) {
+  const updateNode = useFlowEditorStore((state) => state.updateNode);
+
+  const handleSelectNodeType = (nodeId: string, isObject: boolean) => {
+    const newObjNodeData: ObjectNodeData = {
+      name: "",
+      description:
+        "This is a description of an object. This is a much longer description. It is so long and has nothing else to say. I am just writing random stuff now to add more description!",
+      required: true,
+    };
+
+    const newNonObjNodeData: NonObjectNodeData = {
+      name: "",
+      description:
+        "This is a non-object node. It could represent the property of an object like a string.",
+      type: "",
+      required: true,
+    };
+
+    updateNode(nodeId, (prev) => ({
+      ...prev,
+      type: isObject ? "object" : "nonObject",
+      data: isObject ? newObjNodeData : newNonObjNodeData,
+    }));
+  };
+
   return (
     <>
       <Handle
@@ -23,13 +52,13 @@ function SelectorNode(props: NodeProps<SelectorNodeData>) {
           </div>
           <div className="card-actions">
             <button
-              onClick={() => props.data.setIsObject(props.id, true)}
+              onClick={() => handleSelectNodeType(props.id, true)}
               className="btn btn-sm"
             >
               Yes
             </button>
             <button
-              onClick={() => props.data.setIsObject(props.id, false)}
+              onClick={() => handleSelectNodeType(props.id, false)}
               className="btn btn-sm"
             >
               No

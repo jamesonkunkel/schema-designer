@@ -1,6 +1,6 @@
 //import react hooks
 import { nanoid } from "nanoid";
-import { useCallback, useRef } from "react";
+import { useCallback, useRef, useEffect } from "react";
 
 //import stores
 import useFlowEditorStore from "../../stores/flowEditorStore";
@@ -127,6 +127,11 @@ function FlowEditor() {
     }));
   };
 
+  //TODO: make save debounced
+  useEffect(() => {
+    handleSave();
+  }, [editingFlow]);
+
   if (!editingFlow) return <div>Select a schema project.</div>;
 
   return (
@@ -151,9 +156,6 @@ function FlowEditor() {
         <Panel position="top-left">
           <button onClick={logFlowToSchema} className="btn btn-success">
             To Schema
-          </button>
-          <button onClick={handleSave} className="btn btn-success">
-            Save
           </button>
         </Panel>
       </ReactFlow>

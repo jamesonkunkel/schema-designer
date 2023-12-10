@@ -43,7 +43,10 @@ function ProjectTable() {
         <tbody>
           {/* body */}
           {projects.map((project) => (
-            <tr key={project.id}>
+            <tr
+              key={project.id}
+              className={editingProject?.id === project.id ? "bg-base-200" : ""}
+            >
               <td>{project.name}</td>
               <td className="flex space-x-2">
                 <button

@@ -42,10 +42,10 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
 
   //for each child, recursively call flowToSchema to get its schema
   rootNodeChildrenNodes.forEach((childNode) => {
-    if (childNode.type === "object") {
+    if (childNode.type === "object" && childNode.data.name !== "") {
       const childSchema = flowToSchema(childNode.id, nodes, edges);
       schema.properties[childNode.data.name] = childSchema;
-    } else {
+    } else if (childNode.type !== "object" && childNode.data.name !== "") {
       schema.properties[childNode.data.name] = {
         type: childNode.data.type,
         description: childNode.data.description,

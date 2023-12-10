@@ -56,13 +56,13 @@ function CreateProject() {
     <div className="flex flex-col space-y-4">
       <input
         type="text"
-        placeholder="Schema name"
+        placeholder="New schema name"
         className="input input-bordered w-full max-w-xs"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
 
-      <button className="btn btn-primary" onClick={submit}>
+      <button className="btn btn-sm btn-primary" onClick={submit}>
         Create Schema
       </button>
     </div>

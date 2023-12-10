@@ -132,10 +132,11 @@ function FlowEditor() {
     handleSave();
   }, [editingFlow]);
 
-  if (!editingFlow) return <div>Select a schema project.</div>;
+  if (!editingFlow)
+    return <div className="w-full h-full">Select a schema project.</div>;
 
   return (
-    <div className="w-3/4 h-full" ref={reactFlowWrapper}>
+    <div className="w-full h-full" ref={reactFlowWrapper}>
       <ReactFlow
         nodes={editingFlow.nodes}
         edges={editingFlow.edges}

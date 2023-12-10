@@ -9,15 +9,24 @@ function ProjectTable() {
     state.deleteProject,
   ]);
 
-  const setEditingProject = useFlowEditorStore(
-    (state) => state.setEditingProject
-  );
+  const [editingProject, setEditingProject] = useFlowEditorStore((state) => [
+    state.editingProject,
+    state.setEditingProject,
+  ]);
 
   const handleStartEditing = (id: string) => {
     const project = projects.find((project) => project.id === id);
 
     if (project) {
       setEditingProject(project);
+    }
+  };
+
+  const handleDeleteProject = (id: string) => {
+    deleteProject(id);
+
+    if (editingProject?.id === id) {
+      setEditingProject(null);
     }
   };
 
@@ -44,7 +53,7 @@ function ProjectTable() {
                   Edit
                 </button>
                 <button
-                  onClick={() => deleteProject(project.id)}
+                  onClick={() => handleDeleteProject(project.id)}
                   className="btn btn-xs btn-error"
                 >
                   Delete

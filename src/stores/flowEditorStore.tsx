@@ -20,7 +20,7 @@ interface FlowEditorStore {
   editingFlow: ReactFlowJsonObject | null;
 
   //set the editingProject
-  setEditingProject: (project: Project) => void;
+  setEditingProject: (project: Project | null) => void;
 
   //set the editingFlow
   setEditingFlow: (flow: ReactFlowJsonObject) => void;
@@ -49,10 +49,10 @@ const useFlowEditorStore = createWithEqualityFn<FlowEditorStore>(
     editingFlow: null,
 
     //set the editingProject
-    setEditingProject: (project: Project) => {
+    setEditingProject: (project: Project | null) => {
       set(() => ({
         editingProject: project,
-        editingFlow: project.flow,
+        editingFlow: project ? project.flow : null,
       }));
     },
 

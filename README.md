@@ -15,4 +15,6 @@ npm i
 npm run dev
 ```
 
+Check out the application live [here](https://schema-designer-six.vercel.app/) (deployed on Vercel).
+
 <img width="1791" alt="Screenshot 2023-12-11 at 2 32 20 AM" src="https://github.com/jamesonkunkel/schema-designer/assets/125910845/ac1e0a05-4c18-478d-b2b9-3ce134f03d90">

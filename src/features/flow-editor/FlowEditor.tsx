@@ -106,18 +106,6 @@ function FlowEditor() {
     }));
   };
 
-  const logFlowToSchema = () => {
-    if (!editingFlow) return;
-
-    console.log(
-      JSON.stringify(
-        flowToSchema("root", editingFlow.nodes, editingFlow.edges),
-        null,
-        2
-      )
-    );
-  };
-
   const handleSave = () => {
     if (!editingFlow || !editingProject) return;
 
@@ -154,11 +142,6 @@ function FlowEditor() {
             backgroundColor: "oklch(var(--n))",
           }}
         />
-        <Panel position="top-left">
-          <button onClick={logFlowToSchema} className="btn btn-success">
-            To Schema
-          </button>
-        </Panel>
       </ReactFlow>
     </div>
   );

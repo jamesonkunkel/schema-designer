@@ -16,7 +16,8 @@ import ErrorIcon from "../../../assets/ErrorIcon";
 export type NonObjectNodeData = {
   name: string;
   description: string;
-  type: "" | "string" | "number" | "boolean";
+  type: "" | "string" | "number" | "boolean" | "array";
+  arrayType: "" | "string" | "number" | "boolean" | "array";
   required: boolean;
 };
 
@@ -30,6 +31,7 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
   const [name, setName] = useState(props.data.name);
   const [description, setDescription] = useState(props.data.description);
   const [type, setType] = useState(props.data.type as string);
+  const [arrayType, setArrayType] = useState(props.data.type as string);
   const [required, setRequired] = useState(props.data.required);
 
   const handleSaveName = () => {
@@ -51,6 +53,15 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
     updateNode(props.id, (prev) => ({
       ...prev,
       data: { ...prev.data, type },
+    }));
+  };
+
+  const handleSaveArrayType = (type: string) => {
+    setArrayType(type);
+
+    updateNode(props.id, (prev) => ({
+      ...prev,
+      data: { ...prev.data, arrayType: type },
     }));
   };
 
@@ -148,8 +159,26 @@ function NonObjectNode(props: NodeProps<NonObjectNodeData>) {
               <option value="string">string</option>
               <option value="number">number</option>
               <option value="boolean">boolean</option>
+              <option value="array">array</option>
             </select>
           </div>
+
+          {type === "array" && (
+            <div className="flex space-x-2">
+              <select
+                value={arrayType}
+                className="select select-bordered w-full max-w-xs text-base-content"
+                onChange={(e) => {
+                  handleSaveArrayType(e.target.value);
+                }}
+              >
+                <option value="">Select array type</option>
+                <option value="string">string</option>
+                <option value="number">number</option>
+                <option value="boolean">boolean</option>
+              </select>
+            </div>
+          )}
 
           <div className="card bg-base-100 px-4 py-1">
             <label className="label cursor-pointer ">

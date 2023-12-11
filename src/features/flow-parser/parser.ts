@@ -45,6 +45,17 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
     if (childNode.type === "object" && childNode.data.name !== "") {
       const childSchema = flowToSchema(childNode.id, nodes, edges);
       schema.properties[childNode.data.name] = childSchema;
+    } else if (
+      childNode.type !== "object" &&
+      childNode.data.type === "array" &&
+      childNode.data.name !== "" &&
+      childNode.data.arrayType !== ""
+    ) {
+      schema.properties[childNode.data.name] = {
+        type: "array",
+        description: childNode.data.description,
+        items: { type: childNode.data.arrayType },
+      };
     } else if (childNode.type !== "object" && childNode.data.name !== "") {
       schema.properties[childNode.data.name] = {
         type: childNode.data.type,

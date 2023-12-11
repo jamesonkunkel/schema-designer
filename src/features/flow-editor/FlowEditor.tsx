@@ -122,7 +122,7 @@ function FlowEditor() {
 
   if (!editingFlow)
     return (
-      <div className="w-full h-full bg-neutral px-4 py-4">
+      <div className="w-full h-full bg-neutral px-4 py-4 text-neutral-content">
         Select a schema project.
       </div>
     );

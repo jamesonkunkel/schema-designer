@@ -2,6 +2,10 @@
 import useProjectsStore from "../../../stores/projectsStore";
 import useFlowEditorStore from "../../../stores/flowEditorStore";
 
+//import assets
+import EditIcon from "../../../assets/EditIcon";
+import DeleteIcon from "../../../assets/DeleteIcon";
+
 function ProjectTable() {
   //store selectors
   const [projects, deleteProject] = useProjectsStore((state) => [
@@ -31,10 +35,10 @@ function ProjectTable() {
   };
 
   return (
-    <div className="overflow-x-auto overflow-y-auto">
+    <div className="overflow-x-auto overflow-y-auto text-neutral-content">
       <table className="table">
         {/* head */}
-        <thead>
+        <thead className="text-neutral-content">
           <tr>
             <th>Name</th>
             <th></th>
@@ -53,13 +57,13 @@ function ProjectTable() {
                   onClick={() => handleStartEditing(project.id)}
                   className="btn btn-xs btn-secondary"
                 >
-                  Edit
+                  <EditIcon />
                 </button>
                 <button
                   onClick={() => handleDeleteProject(project.id)}
                   className="btn btn-xs btn-error"
                 >
-                  Delete
+                  <DeleteIcon />
                 </button>
               </td>
             </tr>

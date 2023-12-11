@@ -45,21 +45,33 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
     if (childNode.type === "object" && childNode.data.name !== "") {
       const childSchema = flowToSchema(childNode.id, nodes, edges);
       schema.properties[childNode.data.name] = childSchema;
-    } else if (
-      childNode.type !== "object" &&
-      childNode.data.type === "array" &&
-      childNode.data.name !== "" &&
-      childNode.data.arrayType !== ""
-    ) {
+    } else if (childNode.type === "stringNode") {
+      console.log("string detected");
+      schema.properties[childNode.data.name] = {
+        type: "string",
+        description: childNode.data.description,
+      };
+    } else if (childNode.type === "numberNode") {
+      console.log("number detected");
+      schema.properties[childNode.data.name] = {
+        type: "number",
+        description: childNode.data.description,
+      };
+    } else if (childNode.type === "booleanNode") {
+      console.log("boolean detected");
+      schema.properties[childNode.data.name] = {
+        type: "boolean",
+        description: childNode.data.description,
+      };
+    } else if (childNode.type === "arrayNode" && childNode.data.name !== "") {
+      console.log("array detected");
       schema.properties[childNode.data.name] = {
         type: "array",
         description: childNode.data.description,
-        items: { type: childNode.data.arrayType },
-      };
-    } else if (childNode.type !== "object" && childNode.data.name !== "") {
-      schema.properties[childNode.data.name] = {
-        type: childNode.data.type,
-        description: childNode.data.description,
+        items:
+          childNode.data.arrayType !== ""
+            ? { type: childNode.data.arrayType }
+            : {},
       };
     }
 

@@ -15,19 +15,22 @@ import "reactflow/dist/style.css";
 import RootNode from "./components/RootNode";
 import SelectorNode from "./components/SelectorNode";
 import ObjectNode from "./components/ObjectNode";
-import NonObjectNode from "./components/NonObjectNode";
+import StringNode from "./components/StringNode";
+import NumberNode from "./components/NumberNode";
+import BooleanNode from "./components/BooleanNode";
+import ArrayNode from "./components/ArrayNode";
 
 //import node data types
 import type { SelectorNodeData } from "./components/SelectorNode";
-
-//import utils
-import { flowToSchema } from "../flow-parser/parser";
 
 const nodeTypes = {
   root: RootNode,
   selector: SelectorNode,
   object: ObjectNode,
-  nonObject: NonObjectNode,
+  stringNode: StringNode,
+  numberNode: NumberNode,
+  booleanNode: BooleanNode,
+  arrayNode: ArrayNode,
 };
 
 function FlowEditor() {

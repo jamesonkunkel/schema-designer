@@ -2,8 +2,9 @@
 import { Handle, Position } from "reactflow";
 import type { NodeProps } from "reactflow";
 
+//import node data types
 import type { ObjectNodeData } from "./ObjectNode";
-import type { NonObjectNodeData } from "./NonObjectNode";
+import type { StringNodeData } from "./StringNode";
 
 //import stores
 import useFlowEditorStore from "../../../stores/flowEditorStore";
@@ -21,19 +22,18 @@ function SelectorNode(props: NodeProps<SelectorNodeData>) {
       required: true,
     };
 
-    const newNonObjNodeData: NonObjectNodeData = {
+    // by default we will create a string node
+    const newStringNodeData: StringNodeData = {
       name: "",
       description:
-        "This is a non-object node. It could represent the property of an object like a string.",
-      type: "",
-      arrayType: "",
+        "This is a string node. It could represent the property of an object like a string.",
       required: true,
     };
 
     updateNode(nodeId, (prev) => ({
       ...prev,
-      type: isObject ? "object" : "nonObject",
-      data: isObject ? newObjNodeData : newNonObjNodeData,
+      type: isObject ? "object" : "stringNode",
+      data: isObject ? newObjNodeData : newStringNodeData,
     }));
   };
 

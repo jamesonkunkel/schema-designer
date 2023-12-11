@@ -9,6 +9,7 @@ import useFlowEditorStore from "../../stores/flowEditorStore";
 
 //import utils
 import { flowToSchema } from "../flow-parser/parser";
+import CopyIcon from "../../assets/CopyIcon";
 
 function CodePreview() {
   //store selectors
@@ -29,9 +30,20 @@ function CodePreview() {
     );
   }, [editingFlow]);
 
+  // function to copy code to clipboard
+  const copyCode = () => {
+    navigator.clipboard.writeText(code);
+  };
+
   return (
     <div className="h-full w-1/2 px-4 py-4 flex flex-col space-y-4">
-      <h1 className="text-lg font-semibold">Code Preview</h1>
+      <div className="flex justify-between">
+        <h1 className="text-lg font-semibold">Code Preview</h1>
+        <button onClick={copyCode} className="btn btn-sm btn-accent">
+          <CopyIcon />
+        </button>
+      </div>
+
       <Editor
         height="100%"
         options={{
@@ -43,7 +55,6 @@ function CodePreview() {
         }}
         theme="vs-dark"
         defaultLanguage="json"
-        // defaultValue="// some comment"
         value={code}
       />
     </div>

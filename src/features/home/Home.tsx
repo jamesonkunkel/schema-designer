@@ -9,7 +9,7 @@ import CodePreview from "../code-preview/CodePreview";
 function Home() {
   return (
     <div className="flex flex-col space-y-4 px-4 py-4 h-5/6">
-      <div className="flex h-full">
+      <div className="flex h-full space-x-4">
         <Sidebar />
         <ReactFlowProvider>
           <FlowEditor />

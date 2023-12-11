@@ -121,7 +121,11 @@ function FlowEditor() {
   }, [editingFlow]);
 
   if (!editingFlow)
-    return <div className="w-full h-full">Select a schema project.</div>;
+    return (
+      <div className="w-full h-full bg-neutral px-4 py-4">
+        Select a schema project.
+      </div>
+    );
 
   return (
     <div className="w-full h-full" ref={reactFlowWrapper}>

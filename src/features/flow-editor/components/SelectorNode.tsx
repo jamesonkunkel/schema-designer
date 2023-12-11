@@ -26,6 +26,7 @@ function SelectorNode(props: NodeProps<SelectorNodeData>) {
       description:
         "This is a non-object node. It could represent the property of an object like a string.",
       type: "",
+      arrayType: "",
       required: true,
     };
 

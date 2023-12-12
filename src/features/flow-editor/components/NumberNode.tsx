@@ -20,18 +20,33 @@ export type NumberNodeData = {
   name: string;
   description: string;
   required: boolean;
+  usesMinimum: boolean;
+  minimum: number;
+  maximum: null | number;
 };
 
 function NumberNode(props: NodeProps<NumberNodeData>) {
+  console.log(props.data);
+
   //store selector
   const [updateNode] = useFlowEditorStore((state) => [state.updateNode]);
 
-  //component state
+  //name state
   const [isEditingName, setIsEditingName] = useState(false);
-  const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [name, setName] = useState(props.data.name);
+
+  //description state
+  const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [description, setDescription] = useState(props.data.description);
+
+  //required state
   const [required, setRequired] = useState(props.data.required);
+
+  //minimum state
+  const [usesMinimum, setUsesMinimum] = useState(props.data.usesMinimum);
+  const [minimum, setMinimum] = useState(
+    props.data.minimum ? props.data.minimum : 0
+  );
 
   const handleSaveName = () => {
     setIsEditingName(false);
@@ -52,6 +67,25 @@ function NumberNode(props: NodeProps<NumberNodeData>) {
     updateNode(props.id, (prev) => ({
       ...prev,
       data: { ...prev.data, required: !required },
+    }));
+  };
+
+  const handleSaveUsesMinimum = () => {
+    setUsesMinimum((prevUsesMinimum) => {
+      updateNode(props.id, (prev) => ({
+        ...prev,
+        data: { ...prev.data, usesMinimum: !prevUsesMinimum },
+      }));
+      return !prevUsesMinimum; // Return the new value for the local state
+    });
+  };
+
+  const handleSaveMinimum = (minimum: number) => {
+    setMinimum(minimum);
+
+    updateNode(props.id, (prev) => ({
+      ...prev,
+      data: { ...prev.data, minimum },
     }));
   };
 
@@ -128,21 +162,56 @@ function NumberNode(props: NodeProps<NumberNodeData>) {
             </div>
           )}
 
-          <div className="flex space-x-2">
-            <select
-              defaultValue={"number"}
-              className="select select-bordered w-full max-w-xs text-base-content"
-              onChange={(e) => {
-                handleSelectType(props.id, e.target.value);
-              }}
-            >
-              <option value="">Property type</option>
-              <option value="string">string</option>
-              <option value="number">number</option>
-              <option value="boolean">boolean</option>
-              <option value="array">array</option>
-            </select>
-          </div>
+          <select
+            defaultValue={"number"}
+            className="select select-bordered w-full max-w-xs text-base-content"
+            onChange={(e) => {
+              handleSelectType(props.id, e.target.value);
+            }}
+          >
+            <option value="">Property type</option>
+            <option value="string">string</option>
+            <option value="number">number</option>
+            <option value="boolean">boolean</option>
+            <option value="array">array</option>
+          </select>
+
+          {!usesMinimum && (
+            <div className="card bg-base-100 px-4 py-1">
+              <label className="label cursor-pointer ">
+                <span className="label-text">Minimum value?</span>
+                <input
+                  checked={usesMinimum}
+                  type="checkbox"
+                  className="checkbox"
+                  onChange={handleSaveUsesMinimum}
+                />
+              </label>
+            </div>
+          )}
+
+          {usesMinimum && (
+            <div className="card bg-base-100 px-4 py-1 flex flex-col space-y-2 ">
+              <label className="label cursor-pointer ">
+                <span className="label-text">Minimum value?</span>
+                <input
+                  checked={usesMinimum}
+                  type="checkbox"
+                  className="checkbox"
+                  onChange={handleSaveUsesMinimum}
+                />
+              </label>
+
+              <input
+                type="number"
+                value={minimum}
+                onChange={(e) => {
+                  handleSaveMinimum(parseInt(e.target.value));
+                }}
+                className="input input-bordered text-base-content nodrag"
+              />
+            </div>
+          )}
 
           <div className="card bg-base-100 px-4 py-1">
             <label className="label cursor-pointer ">

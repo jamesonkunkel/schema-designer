@@ -20,9 +20,10 @@ const handleSelectType = (nodeId: string, type: string) => {
     description:
       "This is a number node. It could represent the property of an object like a number.",
     required: true,
-    maximum: null,
     usesMinimum: false,
     minimum: 0,
+    usesMaximum: false,
+    maximum: 0,
   };
 
   const newBooleanNodeData: BooleanNodeData = {

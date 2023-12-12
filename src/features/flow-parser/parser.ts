@@ -46,25 +46,27 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
       const childSchema = flowToSchema(childNode.id, nodes, edges);
       schema.properties[childNode.data.name] = childSchema;
     } else if (childNode.type === "stringNode") {
-      console.log("string detected");
       schema.properties[childNode.data.name] = {
         type: "string",
         description: childNode.data.description,
       };
     } else if (childNode.type === "numberNode") {
-      console.log("number detected");
       schema.properties[childNode.data.name] = {
         type: "number",
         description: childNode.data.description,
+        minimum: childNode.data.usesMinimum
+          ? childNode.data.minimum
+          : undefined,
+        maximum: childNode.data.usesMaximum
+          ? childNode.data.maximum
+          : undefined,
       };
     } else if (childNode.type === "booleanNode") {
-      console.log("boolean detected");
       schema.properties[childNode.data.name] = {
         type: "boolean",
         description: childNode.data.description,
       };
     } else if (childNode.type === "arrayNode" && childNode.data.name !== "") {
-      console.log("array detected");
       schema.properties[childNode.data.name] = {
         type: "array",
         description: childNode.data.description,

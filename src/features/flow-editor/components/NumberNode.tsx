@@ -22,7 +22,8 @@ export type NumberNodeData = {
   required: boolean;
   usesMinimum: boolean;
   minimum: number;
-  maximum: null | number;
+  usesMaximum: boolean;
+  maximum: number;
 };
 
 function NumberNode(props: NodeProps<NumberNodeData>) {
@@ -46,6 +47,12 @@ function NumberNode(props: NodeProps<NumberNodeData>) {
   const [usesMinimum, setUsesMinimum] = useState(props.data.usesMinimum);
   const [minimum, setMinimum] = useState(
     props.data.minimum ? props.data.minimum : 0
+  );
+
+  //maximum state
+  const [usesMaximum, setUsesMaximum] = useState(props.data.usesMaximum);
+  const [maximum, setMaximum] = useState(
+    props.data.maximum ? props.data.maximum : 0
   );
 
   const handleSaveName = () => {
@@ -86,6 +93,25 @@ function NumberNode(props: NodeProps<NumberNodeData>) {
     updateNode(props.id, (prev) => ({
       ...prev,
       data: { ...prev.data, minimum },
+    }));
+  };
+
+  const handleSaveUsesMaximum = () => {
+    setUsesMaximum((prevUsesMaximum) => {
+      updateNode(props.id, (prev) => ({
+        ...prev,
+        data: { ...prev.data, usesMaximum: !prevUsesMaximum },
+      }));
+      return !prevUsesMaximum; // Return the new value for the local state
+    });
+  };
+
+  const handleSaveMaximum = (maximum: number) => {
+    setMaximum(maximum);
+
+    updateNode(props.id, (prev) => ({
+      ...prev,
+      data: { ...prev.data, maximum },
     }));
   };
 
@@ -207,6 +233,43 @@ function NumberNode(props: NodeProps<NumberNodeData>) {
                 value={minimum}
                 onChange={(e) => {
                   handleSaveMinimum(parseInt(e.target.value));
+                }}
+                className="input input-bordered text-base-content nodrag"
+              />
+            </div>
+          )}
+
+          {!usesMaximum && (
+            <div className="card bg-base-100 px-4 py-1">
+              <label className="label cursor-pointer ">
+                <span className="label-text">Maximum value?</span>
+                <input
+                  checked={usesMaximum}
+                  type="checkbox"
+                  className="checkbox"
+                  onChange={handleSaveUsesMaximum}
+                />
+              </label>
+            </div>
+          )}
+
+          {usesMaximum && (
+            <div className="card bg-base-100 px-4 py-1 flex flex-col space-y-2 ">
+              <label className="label cursor-pointer ">
+                <span className="label-text">Maximum value?</span>
+                <input
+                  checked={usesMaximum}
+                  type="checkbox"
+                  className="checkbox"
+                  onChange={handleSaveUsesMaximum}
+                />
+              </label>
+
+              <input
+                type="number"
+                value={maximum}
+                onChange={(e) => {
+                  handleSaveMaximum(parseInt(e.target.value));
                 }}
                 className="input input-bordered text-base-content nodrag"
               />

@@ -106,7 +106,7 @@ function RootNode(props: NodeProps<RootNodeData>) {
         type="source"
         position={Position.Bottom}
         id="a"
-        style={{ bottom: -5, background: "#555" }}
+        style={{ bottom: -10, background: "#555", width: 20, height: 20 }}
       />
     </>
   );

@@ -61,7 +61,7 @@ function BooleanNode(props: NodeProps<BooleanNodeData>) {
         type="target"
         position={Position.Top}
         id="a"
-        style={{ top: -5, background: "#555" }}
+        style={{ top: -10, background: "#555", width: 20, height: 20 }}
       />
 
       <div className="card card-compact bg-secondary text-primary-content max-w-sm">

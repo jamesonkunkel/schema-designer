@@ -71,7 +71,7 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
         type="target"
         position={Position.Top}
         id="a"
-        style={{ top: -5, background: "#555" }}
+        style={{ top: -10, background: "#555", width: 20, height: 20 }}
       />
 
       <div className="card card-compact bg-primary text-primary-content max-w-sm">
@@ -169,7 +169,7 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
         type="source"
         position={Position.Bottom}
         id="a"
-        style={{ bottom: -5, background: "#555" }}
+        style={{ bottom: -10, background: "#555", width: 20, height: 20 }}
       />
     </>
   );

@@ -7,7 +7,7 @@ import useFlowEditorStore from "../../stores/flowEditorStore";
 import useProjectsStore from "../../stores/projectsStore";
 
 //import reactflow
-import ReactFlow, { Background, Panel, addEdge, useReactFlow } from "reactflow";
+import ReactFlow, { Background, addEdge, useReactFlow } from "reactflow";
 import type { Edge, OnConnectStartParams, Connection, Node } from "reactflow";
 import "reactflow/dist/style.css";
 

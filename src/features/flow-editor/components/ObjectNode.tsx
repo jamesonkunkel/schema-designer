@@ -17,6 +17,7 @@ export type ObjectNodeData = {
   name: string;
   description: string;
   required: boolean;
+  additionalProperties: boolean;
 };
 
 function ObjectNode(props: NodeProps<ObjectNodeData>) {
@@ -29,6 +30,9 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
   const [name, setName] = useState(props.data.name);
   const [description, setDescription] = useState(props.data.description);
   const [required, setRequired] = useState(props.data.required);
+  const [additionalProperties, setAdditionalProperties] = useState(
+    props.data.additionalProperties
+  );
 
   const handleSaveName = () => {
     setIsEditingName(false);
@@ -49,6 +53,15 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
     updateNode(props.id, (prev) => ({
       ...prev,
       data: { ...prev.data, required: !required },
+    }));
+  };
+
+  const handleSaveAdditionalProperties = () => {
+    setAdditionalProperties(!additionalProperties);
+
+    updateNode(props.id, (prev) => ({
+      ...prev,
+      data: { ...prev.data, additionalProperties: !additionalProperties },
     }));
   };
 
@@ -125,6 +138,18 @@ function ObjectNode(props: NodeProps<ObjectNodeData>) {
               </div>
             </div>
           )}
+
+          <div className="card bg-base-100 px-4 py-1">
+            <label className="label cursor-pointer ">
+              <span className="label-text">Allow additional properties?</span>
+              <input
+                checked={additionalProperties}
+                type="checkbox"
+                className="checkbox"
+                onChange={handleSaveAdditionalProperties}
+              />
+            </label>
+          </div>
 
           <div className="card bg-base-100 px-4 py-1">
             <label className="label cursor-pointer ">

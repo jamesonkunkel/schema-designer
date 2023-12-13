@@ -31,6 +31,7 @@ function CreateProject() {
           data: {
             name: "Root",
             description: "This is the root object of the schema.",
+            additionalProperties: false,
           },
           position: { x: 250, y: 5 },
         },

@@ -20,6 +20,7 @@ function SelectorNode(props: NodeProps<SelectorNodeData>) {
       description:
         "This is a description of an object. This is a much longer description. It is so long and has nothing else to say. I am just writing random stuff now to add more description!",
       required: true,
+      additionalProperties: false,
     };
 
     // by default we will create a string node

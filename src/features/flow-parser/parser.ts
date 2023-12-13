@@ -8,6 +8,7 @@ interface JsonSchema {
     [key: string]: any;
   };
   required: string[];
+  additionalProperties?: boolean;
 }
 
 export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
@@ -24,6 +25,7 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
     description: rootNode.data.description,
     properties: {},
     required: [],
+    additionalProperties: rootNode.data.additionalProperties,
   };
 
   //determine the children of rootNode using the edges array
@@ -45,12 +47,12 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
     if (childNode.type === "object" && childNode.data.name !== "") {
       const childSchema = flowToSchema(childNode.id, nodes, edges);
       schema.properties[childNode.data.name] = childSchema;
-    } else if (childNode.type === "stringNode") {
+    } else if (childNode.type === "stringNode" && childNode.data.name !== "") {
       schema.properties[childNode.data.name] = {
         type: "string",
         description: childNode.data.description,
       };
-    } else if (childNode.type === "numberNode") {
+    } else if (childNode.type === "numberNode" && childNode.data.name !== "") {
       schema.properties[childNode.data.name] = {
         type: "number",
         description: childNode.data.description,
@@ -61,7 +63,7 @@ export const flowToSchema = (nodeId: string, nodes: Node[], edges: Edge[]) => {
           ? childNode.data.maximum
           : undefined,
       };
-    } else if (childNode.type === "booleanNode") {
+    } else if (childNode.type === "booleanNode" && childNode.data.name !== "") {
       schema.properties[childNode.data.name] = {
         type: "boolean",
         description: childNode.data.description,

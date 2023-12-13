@@ -15,6 +15,7 @@ import useFlowEditorStore from "../../../stores/flowEditorStore";
 export type RootNodeData = {
   name: string;
   description: string;
+  additionalProperties: boolean;
 };
 
 function RootNode(props: NodeProps<RootNodeData>) {
@@ -24,12 +25,24 @@ function RootNode(props: NodeProps<RootNodeData>) {
   //component state
   const [isEditingDescription, setIsEditingDescription] = useState(false);
   const [description, setDescription] = useState(props.data.description);
+  const [additionalProperties, setAdditionalProperties] = useState(
+    props.data.additionalProperties
+  );
 
   const handleSaveDescription = () => {
     setIsEditingDescription(false);
     updateNode(props.id, (prev) => ({
       ...prev,
       data: { ...prev.data, description },
+    }));
+  };
+
+  const handleSaveAdditionalProperties = () => {
+    setAdditionalProperties(!additionalProperties);
+
+    updateNode(props.id, (prev) => ({
+      ...prev,
+      data: { ...prev.data, additionalProperties: !additionalProperties },
     }));
   };
 
@@ -74,6 +87,18 @@ function RootNode(props: NodeProps<RootNodeData>) {
               </div>
             </div>
           )}
+
+          <div className="card bg-base-100 px-4 py-1">
+            <label className="label cursor-pointer ">
+              <span className="label-text">Allow additional properties?</span>
+              <input
+                checked={additionalProperties}
+                type="checkbox"
+                className="checkbox"
+                onChange={handleSaveAdditionalProperties}
+              />
+            </label>
+          </div>
         </div>
       </div>
 
